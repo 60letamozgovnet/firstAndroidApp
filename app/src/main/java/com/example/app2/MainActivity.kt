@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app2.databinding.ActivityMainBinding
 
-//TEST COMMIT
+//TEST COMMIT  2
 
 
 class MainActivity : AppCompatActivity() {
