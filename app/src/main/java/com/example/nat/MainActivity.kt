@@ -2,6 +2,7 @@ package com.example.nat
 
 import android.R
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
     fun onClk(view: View) {
         println("hell yea")
     }
+
+    fun goOnSecond(view: View) {
+        println("click on go on Second")
+        val intent = Intent(this, MainActivity2::class.java)
+        startActivity(intent)
+    }
 }
-
-
