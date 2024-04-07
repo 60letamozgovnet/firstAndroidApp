@@ -1,17 +1,29 @@
 package com.example.app2
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.os.Parcel
+import android.os.Parcelable
+import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app2.databinding.ActivityMainBinding
+import com.example.app2.ui.searchedBooks.SearchedBooksFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity() : AppCompatActivity(), Parcelable {
 
     private lateinit var binding: ActivityMainBinding
+
+    constructor(parcel: Parcel) : this() {
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +38,44 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_search, R.id.navigation_profile
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MainActivity> {
+        override fun createFromParcel(parcel: Parcel): MainActivity {
+            return MainActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MainActivity?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+    @SuppressLint("CommitTransaction")
+    fun SearchButt(view: View) {
+        val fragment = SearchedBooksFragment()
+        if (fragment != null) {
+            Toast.makeText(this, "u are this", Toast.LENGTH_LONG).show()
+            findViewById<EditText>(R.id.fragment_searched_books).text = findViewById<EditText>(R.id.fragment_search).text
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_search, fragment).commit()
+        }
+//        val transaction = supportFragmentManager.beginTransaction()
+//        transaction.replace(R.id.fragment_search, fragment)
+//        transaction.commit()
+    }
+
+
+
 }
