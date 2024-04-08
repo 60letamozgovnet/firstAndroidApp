@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.app2.R
 import com.example.app2.databinding.FragmentSearchBinding
-import com.example.app2.ui.profile.ProfileViewModel
-import com.example.app2.ui.searchedBooks.SearchedBooksFragment
 
 
 class SearchFragment : Fragment() {
@@ -33,7 +30,7 @@ class SearchFragment : Fragment() {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val lineView: TextView = binding.searchLine2
+        val lineView: TextView = binding.searchLine
         searchViewModel.text.observe(viewLifecycleOwner) {
             lineView.text = ""
         }

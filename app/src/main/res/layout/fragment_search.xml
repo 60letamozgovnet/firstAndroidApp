@@ -10,7 +10,7 @@
     tools:visibility="visible">
 
     <EditText
-        android:id="@+id/searchLine2"
+        android:id="@+id/searchLine"
         android:layout_width="299dp"
         android:layout_height="53dp"
         android:ems="10"
@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.044" />
 
     <Button
-        android:id="@+id/btnSearch2"
+        android:id="@+id/btnSearch"
         android:layout_width="56dp"
         android:layout_height="53dp"
         android:onClick="SearchButt"
@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.304"
-        app:layout_constraintStart_toEndOf="@+id/searchLine2"
+        app:layout_constraintStart_toEndOf="@+id/searchLine"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.044" />
 </androidx.constraintlayout.widget.ConstraintLayout>
