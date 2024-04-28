@@ -14,7 +14,7 @@ class CustomDialog : DialogFragment() {
     private lateinit var btnSave: Button
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
-            .setView(R.layout.custom_dialog)
+            .setView(R.layout.custom_dialog_add_note)
             .create()
 
         btnSave = builder.getButton(R.id.save)
@@ -22,10 +22,6 @@ class CustomDialog : DialogFragment() {
             requireView().findViewById<RecyclerView>(R.id.rcView).adapter
         }
         return builder
-    }
-
-    fun getNote(): Note {
-        return Note(title, note_text, countP)
     }
 
     fun getBtnSave(): Button {
