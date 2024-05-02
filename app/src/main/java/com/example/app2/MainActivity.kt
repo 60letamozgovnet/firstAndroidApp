@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app2.databinding.ActivityMainBinding
-import com.example.app2.databinding.FragmentHomeBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -61,4 +59,5 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }

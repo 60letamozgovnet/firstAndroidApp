@@ -38,4 +38,8 @@ class BookAdapter() : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
         itemList.add(book)
         notifyDataSetChanged()
     }
+
+    fun getSize(): Int{
+        return itemList.size
+    }
 }

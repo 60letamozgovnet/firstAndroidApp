@@ -5,21 +5,17 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app2.Note
 import com.example.app2.NoteAdapter
 import com.example.app2.R
 import com.example.app2.databinding.FragmentHomeBinding
-import java.util.logging.Logger.global
 
 
 class HomeFragment : Fragment(), NoteAdapter.Listener {
@@ -36,9 +32,6 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         val root: View = binding.root

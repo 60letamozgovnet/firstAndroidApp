@@ -1,4 +1,4 @@
-package com.example.testingbd.retrofit
+package com.example.app2.retrofit
 
 data class Auth (
     val username: String,

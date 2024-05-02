@@ -1,5 +1,3 @@
-import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -42,6 +40,13 @@ android {
 }
 
 dependencies {
+//    val version: String = "42.6.0"
+//    implementation("org.postgresql:postgresql:$version")
+    //implementation(kotlin("stdlib-jdk8"))
+    //implementation("com.zaxxer:HikariCP:4.0.3")
+    val retrofit_version = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
