@@ -60,4 +60,45 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         }
     }
 
+    fun appendNewLine(file: String, data: String) {
+        val fileOutputStream: FileOutputStream
+        fileOutputStream = openFileOutput(file, Context.MODE_APPEND)
+        fileOutputStream.write(data.toByteArray())
+        fileOutputStream.write("\n".toByteArray())
+
+        println("Append new line inside file")
+        println(data)
+    }
+
+    
+    fun rewriteFile(file: String, data: String) {
+        val fileOutputStream: FileOutputStream
+        // https://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined
+        fileOutputStream = openFileOutput(file, Context.MODE_PRIVATE)
+        fileOutputStream.write(data.toByteArray())
+        fileOutputStream.write("\n".toByteArray())
+
+        println("Rewrite file")
+        println(data)
+    }
+
+
+    // return all rows from file
+    fun getDataFromFile(file: String): String {
+        var fileInputStream: FileInputStream? = null
+        fileInputStream = openFileInput(file)
+        val inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
+        val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
+
+        val stringBuilder: StringBuilder = StringBuilder()
+        var text: String? = null
+        while ({ text = bufferedReader.readLine(); text }() != null) {
+            stringBuilder.append(text)
+            stringBuilder.append("\n")
+
+        }
+
+        return stringBuilder.toString()
+    }
+
 }
