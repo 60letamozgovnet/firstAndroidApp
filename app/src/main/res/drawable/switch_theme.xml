@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_switch"
+        android:width="200dp"
+        android:height="100dp"/>
+    <item android:drawable="@drawable/oval"
+        android:height="6dp"
+        android:width="6dp"
+        android:left="170dp"
+        android:top="26dp"/>
+    <item android:drawable="@drawable/oval"
+        android:height="6dp"
+        android:width="6dp"
+        android:left="120dp"
+        android:top="18dp"/>
+    <item android:drawable="@drawable/oval"
+        android:height="6dp"
+        android:width="6dp"
+        android:left="173dp"
+        android:top="58dp"/>
+    <item android:drawable="@drawable/oval"
+        android:height="6dp"
+        android:width="6dp"
+        android:left="134dp"
+        android:top="47dp"/>
+    <item android:drawable="@drawable/oval"
+        android:height="6dp"
+        android:width="6dp"
+        android:left="108dp"
+        android:top="68dp"/>
+    <item android:drawable="@drawable/oval"
+        android:height="6dp"
+        android:width="6dp"
+        android:left="147dp"
+        android:top="83dp"/>
+    <item android:drawable="@drawable/oval2"
+        android:height="90dp"
+        android:width="90dp"
+        android:top="5dp"
+        android:left="5dp"/>
+    <item android:drawable="@drawable/moon"
+        android:left="13dp"
+        android:top="13dp"
+        android:width="74dp"
+        android:height="74dp"/>
+
+</layer-list>

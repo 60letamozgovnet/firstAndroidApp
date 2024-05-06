@@ -1,6 +1,7 @@
 package com.example.app2
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
@@ -11,6 +12,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.InputStreamReader
 
 
 class MainActivity() : AppCompatActivity(), Parcelable {
@@ -70,7 +75,7 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         println(data)
     }
 
-    
+
     fun rewriteFile(file: String, data: String) {
         val fileOutputStream: FileOutputStream
         // https://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined
@@ -100,5 +105,4 @@ class MainActivity() : AppCompatActivity(), Parcelable {
 
         return stringBuilder.toString()
     }
-
 }

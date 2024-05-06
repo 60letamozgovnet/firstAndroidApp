@@ -18,7 +18,7 @@ class NavFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ):  View? {
-        val view = inflater.inflate(R.layout.fragment_home_nav, container, false)
+        val view = inflater.inflate(R.layout.fragment_prof_nav, container, false)
         val rcView: RecyclerView = view.findViewById(R.id.rcViewProf)
         rcView.adapter = adapter
         val textNote: TextView = view.findViewById(R.id.empty_rcView)

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_switch2"
+        android:width="200dp"
+        android:height="100dp"/>
+    <item
+        android:drawable="@drawable/cloud"
+        android:left="16dp"
+        android:top="47dp"
+        android:width="14dp"
+        android:height="8dp"
+        />
+    <item
+        android:drawable="@drawable/cloud"
+        android:left="50dp"
+        android:top="60dp"
+        android:width="14dp"
+        android:height="8dp"
+        />
+    <item
+        android:drawable="@drawable/cloud"
+        android:left="30dp"
+        android:top="82dp"
+        android:width="14dp"
+        android:height="8dp"
+        />
+    <item
+        android:drawable="@drawable/cloud"
+        android:left="43dp"
+        android:top="24dp"
+        android:width="14dp"
+        android:height="8dp"
+        />
+    <item
+        android:drawable="@drawable/cloud"
+        android:left="80dp"
+        android:top="25dp"
+        android:width="14dp"
+        android:height="8dp"
+        />
+    <item android:drawable="@drawable/oval4"
+        android:gravity="right"
+        android:height="90dp"
+        android:width="90dp"
+        android:top="5dp"
+        android:right="5dp"/>
+    <item android:drawable="@drawable/oval3"
+        android:gravity="right"
+        android:right="13dp"
+        android:top="13dp"
+        android:width="74dp"
+        android:height="74dp"/>
+    <item
+        android:drawable="@drawable/cloud"
+        android:left="80dp"
+        android:top="50dp"
+        android:width="70dp"
+        android:height="40dp"
+        />
+
+</layer-list>
