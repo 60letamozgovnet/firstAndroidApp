@@ -2,6 +2,8 @@ package com.example.app2
 
 import com.example.app2.retrofit.Auth
 import com.example.app2.retrofit.MainApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -22,6 +24,21 @@ class GlobalDataBase {
 //    }
 
         return response
+    }
+
+    suspend fun regI(auth: Auth): Int = withContext(Dispatchers.IO) {
+        val response = Api.reg(auth)
+        response
+    }
+
+    suspend fun getBooks(): List<Book> = withContext(Dispatchers.IO) {
+        val response = Api.getBooks()
+        response
+    }
+
+    suspend fun addBook(book: Book): Int = withContext(Dispatchers.IO) {
+        val response = Api.insBook(book)
+        response
     }
 
     fun test(): Int {
