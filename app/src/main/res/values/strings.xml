@@ -8,4 +8,6 @@
     <string name="element_text">test</string>
     <string name="open_nav">0pen Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

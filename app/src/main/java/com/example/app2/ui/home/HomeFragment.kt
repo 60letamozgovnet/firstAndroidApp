@@ -22,6 +22,8 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
     private var adapter = NoteAdapter(this)
     private var _binding: FragmentHomeBinding? = null
 
+
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -30,7 +32,7 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
@@ -73,13 +75,11 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
     }
 
     override fun onClickView(note: Note) {
-//        val dialogBinding = layoutInflater.inflate(R.layout.(name of xml-file кастомного диалогового окна, в котором будет показана книга), null)
-//        val myDialog = Dialog(requireContext())
-//        myDialog.setContentView(dialogBinding)
-//        myDialog.setCancelable(true)
-//        myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        myDialog.show()
-//        тут дальше логика нажатия на кнопки там и тп
+//        replaceFragment(FragmentBook())
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+
     }
 
 

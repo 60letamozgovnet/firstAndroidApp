@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app2.databinding.BookItemBinding
 
 
-class BookAdapter() : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
+class BookAdapter(val listener: Listener) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
     var itemList: ArrayList<Book> = ArrayList()
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // on below line we are initializing our text view.
-//        val item: TextView = itemView.findViewById(R.id.text_row_item)
         private val binding = BookItemBinding.bind(itemView)
-        fun bind(book: Book) = with(binding){
+        fun bind(book: Book, listener: Listener) = with(binding){
             titleBook.text = book.title
             aboutBook.text = book.about
+            view.setOnClickListener {
+                listener.OnClickView(book)
+            }
         }
     }
 
@@ -26,7 +27,7 @@ class BookAdapter() : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(itemList[position])
+        holder.bind(itemList[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -41,5 +42,9 @@ class BookAdapter() : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
     fun getSize(): Int{
         return itemList.size
+    }
+
+    interface Listener{
+        fun OnClickView(book: Book)
     }
 }
