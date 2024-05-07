@@ -1,6 +1,7 @@
 package com.example.app2
 
 import com.example.app2.retrofit.Auth
+import com.example.app2.retrofit.BookDb
 import com.example.app2.retrofit.MainApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,12 +32,12 @@ class GlobalDataBase {
         response
     }
 
-    suspend fun getBooks(): List<Book> = withContext(Dispatchers.IO) {
+    suspend fun getBooks(): List<BookDb> = withContext(Dispatchers.IO) {
         val response = Api.getBooks()
         response
     }
 
-    suspend fun addBook(book: Book): Int = withContext(Dispatchers.IO) {
+    suspend fun addBook(book: BookDb): Int = withContext(Dispatchers.IO) {
         val response = Api.insBook(book)
         response
     }

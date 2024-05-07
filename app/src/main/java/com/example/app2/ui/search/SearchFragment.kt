@@ -10,12 +10,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app2.Book
 import com.example.app2.BookAdapter
+import com.example.app2.GlobalDataBase
 import com.example.app2.R
 import com.example.app2.databinding.FragmentSearchBinding
+import com.example.app2.retrofit.BookDb
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SearchFragment : Fragment(), BookAdapter.Listener {
@@ -24,8 +28,6 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -38,8 +40,14 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         rcView.adapter = adapter
         val btnSearch: Button = binding.btnSearch
         btnSearch.setOnClickListener{
-            val book = Book(lineView.text.toString(), "about...")
-            adapter.addBook(book)
+            CoroutineScope(Dispatchers.IO).launch {
+                var list: List<BookDb> = GlobalDataBase().getBooks()
+                for (i in list) {
+                    activity?.runOnUiThread {
+                        adapter.addBook(Book(i.bookname, i.author))
+                    }
+                }
+            }
         }
 
         return root
