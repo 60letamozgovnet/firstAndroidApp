@@ -88,7 +88,7 @@ class ProfileFragment: Fragment(), NavigationView.OnNavigationItemSelectedListen
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> replaceFragment(NavFragment())
-            R.id.nav_settings -> replaceFragment(settingsNavFragment())
+            R.id.nav_settings -> replaceFragment(SettingsNavFragment())
         }
         drawerLayout.closeDrawer(GravityCompat.END)
         return true
