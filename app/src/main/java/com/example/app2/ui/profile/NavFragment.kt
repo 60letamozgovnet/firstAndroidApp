@@ -10,17 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app2.Book
 import com.example.app2.BookAdapter
+import com.example.app2.GlobalDataBase
 import com.example.app2.R
+import com.example.app2.retrofit.BookDb
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.InputStreamReader
 
 class NavFragment : Fragment(), BookAdapter.Listener {
-    val adapter_readable = BookAdapter(this)
+    private val adapter_readable = BookAdapter(this)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,26 +33,28 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         val readable: RecyclerView = view.findViewById(R.id.readableBooks)
         val readed: RecyclerView = view.findViewById(R.id.readedBooks)
         readable.adapter = adapter_readable
-        for (i in getDataFromFile("my_books.txt").split("\n")){
-            val s = i.split("\\s+".toRegex())
-            if (s != emptyList<String>()){
-//                println(s)
-//                adapter_readable.addBook(Book(s[0], s[1], "ass"))
+        val file: List<String> = getDataFromFile("my_books.txt").split("\n")
+        var author: String = ""
+        var genre: String = ""
+        var title: String = ""
+        for(i in 0 until file.size){
+            if (i % 3 == 1){
+                if (author.isNotEmpty() and genre.isNotEmpty() and title.isNotEmpty()){
+                    adapter_readable.addBook(Book(title, author, genre))
+                }
+                title = file[i]
+            }
+            else if(i % 3 == 2){
+                author = file[i]
+            }
+            else if(i % 3 == 0){
+                genre = file[i]
             }
         }
+        if (adapter_readable.getSize() > 0){
+            view.findViewById<TextView>(R.id.empty_rcView).visibility = View.INVISIBLE
+        }
 
-//        readable.adapter = adapter
-//        val textNote: TextView = view.findViewById(R.id.empty_rcView)
-//        if (adapter.getSize() > 0){
-//            textNote.visibility = View.INVISIBLE
-//        }
-//        else{
-//            textNote.visibility = View.VISIBLE
-//        }
-//        val readed: RecyclerView = view.findViewById(R.id.readedBooks)
-//        readed.adapter = adapter2
-//        adapter2.addBook(Book("Прочитанные книги:", ""))
-//        println(adapter.getSize())
         return view
     }
 

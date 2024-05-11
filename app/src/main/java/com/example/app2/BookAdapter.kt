@@ -34,6 +34,10 @@ class BookAdapter(val listener: Listener) : RecyclerView.Adapter<BookAdapter.Vie
         return itemList.size
     }
 
+    fun getSize(): Int {
+        return itemList.size
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     fun addBook(book: Book){
         itemList.add(book)

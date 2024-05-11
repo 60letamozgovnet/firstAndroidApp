@@ -68,9 +68,9 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
                 val title: String = dialogBinding.findViewById<EditText>(R.id.titleForBk).text.toString()
                 val authors: String = dialogBinding.findViewById<EditText>(R.id.authorForBk).text.toString()
                 val genre: String = dialogBinding.findViewById<EditText>(R.id.genreForBk).text.toString()
-                println("-----------")
-                println("$title $authors $genre")
-                println("--------------")
+//                println("-----------")
+//                println("$title $authors $genre")
+//                println("--------------")
 
                 CoroutineScope(Dispatchers.IO).launch {
                     GlobalDataBase().addBook(BookDb(title, authors, genre))
@@ -95,7 +95,7 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.CYAN))
         myDialog.show()
         btnAdd.setOnClickListener {
-            appendNewLine("my_books.txt", title.text.toString() + " " + authors.text.toString())
+            appendNewLine("my_books.txt", title.text.toString() + "\n" + authors.text.toString() + "\n" + "Генри :)")
             println(getDataFromFile("my_books.txt"))
         }
     }
