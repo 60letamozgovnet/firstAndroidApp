@@ -43,6 +43,10 @@ class MainActivity() : AppCompatActivity(), Parcelable {
                 R.id.navigation_home, R.id.navigation_search, R.id.navigation_profile
             )
         )
+
+        append("my_books.txt", "")
+        append("theme.txt", "")
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
@@ -65,11 +69,10 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         }
     }
 
-    fun appendNewLine(file: String, data: String) {
+    fun append(file: String, data: String) {
         val fileOutputStream: FileOutputStream
         fileOutputStream = openFileOutput(file, Context.MODE_APPEND)
         fileOutputStream.write(data.toByteArray())
-        fileOutputStream.write("\n".toByteArray())
 
         println("Append new line inside file")
         println(data)

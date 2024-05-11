@@ -13,6 +13,7 @@
         android:id="@+id/searchLine"
         android:layout_width="0dp"
         android:layout_height="53dp"
+        android:layout_marginLeft="3dp"
         android:layout_marginRight="60dp"
         android:ems="10"
         android:hint="Поиск книги"
@@ -48,6 +49,7 @@
         android:layout_height="0dp"
         android:layout_below="@id/searchLine"
         android:layout_marginTop="66dp"
+        android:layout_marginBottom="60dp"
         android:contextClickable="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,6 +58,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchLine"
         tools:ignore="UnknownId" />
+
+    <Button
+        android:id="@+id/add_book_inGDB"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginTop="5dp"
+        android:text="Добавить книгу"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchLine" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

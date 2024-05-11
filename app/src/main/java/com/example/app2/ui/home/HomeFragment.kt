@@ -56,7 +56,7 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
                     dialogBinding.findViewById<EditText>(R.id.titleBk).text.toString(),
                     dialogBinding.findViewById<EditText>(R.id.note).text.toString(),
                     if (dialogBinding.findViewById<EditText>(R.id.countPages).text.toString() == ""){
-                        0
+                        123123
                     }
                     else{
                         dialogBinding.findViewById<EditText>(R.id.countPages).text.toString().toInt()

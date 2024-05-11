@@ -40,10 +40,6 @@ class BookAdapter(val listener: Listener) : RecyclerView.Adapter<BookAdapter.Vie
         notifyDataSetChanged()
     }
 
-    fun getSize(): Int{
-        return itemList.size
-    }
-
     interface Listener{
         fun OnClickView(book: Book)
     }

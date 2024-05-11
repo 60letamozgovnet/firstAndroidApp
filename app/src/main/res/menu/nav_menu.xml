@@ -17,6 +17,11 @@
             android:title="Настрйоки" />
 
         <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/oval"
+            android:title="LogIn / Sign In"/>
+
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/baseline_accessible_exit_24"
             android:title="Выйти" />

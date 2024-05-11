@@ -89,6 +89,7 @@ class ProfileFragment: Fragment(), NavigationView.OnNavigationItemSelectedListen
         when (item.itemId) {
             R.id.nav_home -> replaceFragment(NavFragment())
             R.id.nav_settings -> replaceFragment(SettingsNavFragment())
+            R.id.nav_login -> replaceFragment(LoginFragment())
         }
         drawerLayout.closeDrawer(GravityCompat.END)
         return true

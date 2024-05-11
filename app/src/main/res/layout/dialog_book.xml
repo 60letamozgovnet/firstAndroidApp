@@ -30,5 +30,21 @@
             android:text="Authors"
             android:textColor="#454141"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Genre" />
+
+        <Button
+            android:id="@+id/btn_add_in_my_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="2dp"
+            android:layout_marginVertical="1dp"
+            android:backgroundTint="#C85555"
+            android:text="Add in readable"
+            app:cornerRadius="12dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
