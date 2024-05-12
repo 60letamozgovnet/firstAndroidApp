@@ -35,7 +35,7 @@ class ProfileFragment: Fragment(), NavigationView.OnNavigationItemSelectedListen
         Api = retrofit.create(MainApi::class.java)
     }
 
-    suspend fun logInto(auth: Auth): Int = withContext(Dispatchers.IO) {
+    suspend fun logInto(auth: Auth): String = withContext(Dispatchers.IO) {
         val response = Api.log(auth)
         response
     }

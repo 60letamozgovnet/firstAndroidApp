@@ -68,12 +68,10 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
                 val title: String = dialogBinding.findViewById<EditText>(R.id.titleForBk).text.toString()
                 val authors: String = dialogBinding.findViewById<EditText>(R.id.authorForBk).text.toString()
                 val genre: String = dialogBinding.findViewById<EditText>(R.id.genreForBk).text.toString()
-//                println("-----------")
-//                println("$title $authors $genre")
-//                println("--------------")
 
                 CoroutineScope(Dispatchers.IO).launch {
                     GlobalDataBase().addBook(BookDb(title, authors, genre))
+                    myDialog.dismiss()
                 }
             }
         }
@@ -97,7 +95,9 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         btnAdd.setOnClickListener {
             appendNewLine("my_books.txt", title.text.toString() + "\n" + authors.text.toString() + "\n" + "Генри :)")
             println(getDataFromFile("my_books.txt"))
+            myDialog.dismiss()
         }
+
     }
 
     fun appendNewLine(file: String, data: String) {
@@ -125,5 +125,40 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         }
 
         return stringBuilder.toString()
+    }
+
+    fun rewriteFile(file: String, data: String) {
+        val fileOutputStream: FileOutputStream
+        // https://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined
+        fileOutputStream = requireActivity().openFileOutput(file, Context.MODE_PRIVATE)
+        fileOutputStream.write(data.toByteArray())
+        fileOutputStream.write("\n".toByteArray())
+
+        println("Rewrite file")
+        println(data)
+    }
+
+    fun deleteBook(name: String){
+        val data: String = getDataFromFile("my_books.txt")
+
+        var cnt: Int = 0
+        var cnt2: Int = 0
+        var l: String = ""
+        for (i in data.split("\n")) {
+            if ((0 < cnt2) and (cnt2 <= 2)) {
+                cnt2 ++
+                continue
+            }
+            if ((cnt % 3 == 1) and (i == name)) {
+                cnt2 = 1
+                cnt += 3
+                continue
+            }
+
+            l += (i + "\n")
+            cnt ++
+        }
+        rewriteFile("my_books.txt", l)
+        println(l)
     }
 }

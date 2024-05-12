@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.service.autofill.Validators.and
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -44,8 +45,11 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             )
         )
 
+
+        append("token_bearer.txt", "")
         append("my_books.txt", "")
         append("theme.txt", "")
+
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -89,7 +93,6 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         println("Rewrite file")
         println(data)
     }
-
 
     // return all rows from file
     fun getDataFromFile(file: String): String {

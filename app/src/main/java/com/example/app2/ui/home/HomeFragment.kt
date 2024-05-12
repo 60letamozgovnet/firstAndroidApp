@@ -62,6 +62,7 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
                         dialogBinding.findViewById<EditText>(R.id.countPages).text.toString().toInt()
                     },
                 ))
+                myDialog.dismiss()
             }
 
         }
