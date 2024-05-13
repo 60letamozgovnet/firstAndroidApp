@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ToggleButton
-import androidx.core.content.ContextCompat
 import com.example.app2.GlobalDataBase
 import com.example.app2.R
 import com.example.app2.retrofit.Auth

@@ -132,7 +132,7 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         // https://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined
         fileOutputStream = requireActivity().openFileOutput(file, Context.MODE_PRIVATE)
         fileOutputStream.write(data.toByteArray())
-        fileOutputStream.write("\n".toByteArray())
+//        fileOutputStream.write("\n".toByteArray())
 
         println("Rewrite file")
         println(data)

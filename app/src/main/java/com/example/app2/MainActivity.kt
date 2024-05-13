@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import android.service.autofill.Validators.and
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -49,7 +48,7 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         append("token_bearer.txt", "")
         append("my_books.txt", "")
         append("theme.txt", "")
-
+        println(getDataFromFile("notes.txt").split("\n").size)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -88,7 +87,6 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         // https://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined
         fileOutputStream = openFileOutput(file, Context.MODE_PRIVATE)
         fileOutputStream.write(data.toByteArray())
-        fileOutputStream.write("\n".toByteArray())
 
         println("Rewrite file")
         println(data)
