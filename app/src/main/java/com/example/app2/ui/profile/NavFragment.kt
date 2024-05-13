@@ -38,16 +38,16 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         var genre: String = ""
         var title: String = ""
         for(i in 0 until file.size){
-            if (i % 3 == 1){
+            if (i % 3 == 0){
                 if (author.isNotEmpty() and genre.isNotEmpty() and title.isNotEmpty()){
                     adapter_readable.addBook(Book(title, author, genre))
                 }
                 title = file[i]
             }
-            else if(i % 3 == 2){
+            else if(i % 3 == 1){
                 author = file[i]
             }
-            else if(i % 3 == 0){
+            else if(i % 3 == 2){
                 genre = file[i]
             }
         }
@@ -81,15 +81,12 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         fileInputStream = requireActivity().openFileInput(file)
         val inputStreamReader = InputStreamReader(fileInputStream)
         val bufferedReader = BufferedReader(inputStreamReader)
-
         val stringBuilder: StringBuilder = StringBuilder()
         var text: String? = null
         while ({ text = bufferedReader.readLine(); text }() != null) {
             stringBuilder.append(text)
             stringBuilder.append("\n")
-
         }
-
         return stringBuilder.toString()
     }
 }
