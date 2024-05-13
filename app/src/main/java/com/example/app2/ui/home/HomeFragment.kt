@@ -1,6 +1,8 @@
 package com.example.app2.ui.home
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,12 +12,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app2.Note
 import com.example.app2.NoteAdapter
 import com.example.app2.R
 import com.example.app2.databinding.FragmentHomeBinding
+import java.io.FileOutputStream
 
 
 class HomeFragment : Fragment(), NoteAdapter.Listener {
@@ -52,16 +56,19 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
             btnSave.setOnClickListener {
                 rcView.visibility = View.VISIBLE;
                 textView.visibility = View.INVISIBLE
+                val title = dialogBinding.findViewById<EditText>(R.id.titleBk).text.toString()
+                val note = dialogBinding.findViewById<EditText>(R.id.note).text.toString()
+                var count: Int
+                if (dialogBinding.findViewById<EditText>(R.id.countPages).text.toString() == ""){
+                    count = 1
+                }
+                else{
+                    count = dialogBinding.findViewById<EditText>(R.id.countPages).text.toString().toInt()
+                }
                 adapter.addNote(Note(
-                    dialogBinding.findViewById<EditText>(R.id.titleBk).text.toString(),
-                    dialogBinding.findViewById<EditText>(R.id.note).text.toString(),
-                    if (dialogBinding.findViewById<EditText>(R.id.countPages).text.toString() == ""){
-                        1
-                    }
-                    else{
-                        dialogBinding.findViewById<EditText>(R.id.countPages).text.toString().toInt()
-                    },
+                    title, note, count
                 ))
+                appendNewLine("notes.txt", title + "\n" + note + "\n" + count)
                 myDialog.dismiss()
             }
 
@@ -72,15 +79,33 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
     }
 
     override fun onClickRmvBtn(note: Note) {
-        adapter.removeNote(note)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Вы точно хотите удалить заметку?")
+        builder.setPositiveButton("Ок") { dialog, _ ->
+            // Implement the Code when OK Button is Clicked
+            adapter.removeNote(note)
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Отмена") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.setCancelable(false)
+        val dialog = builder.create()
+        dialog.show()
     }
 
     override fun onClickView(note: Note) {
-//        replaceFragment(FragmentBook())
+
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun appendNewLine(file: String, data: String) {
+        val fileOutputStream: FileOutputStream
+        fileOutputStream = requireActivity().openFileOutput(file, Context.MODE_APPEND)
+        fileOutputStream.write(data.toByteArray())
+        fileOutputStream.write("\n".toByteArray())
 
+        println("Append new line inside file")
+        println(data)
     }
 
 

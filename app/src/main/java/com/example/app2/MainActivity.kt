@@ -45,7 +45,7 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             )
         )
 
-
+        append("notes.txt", "")
         append("token_bearer.txt", "")
         append("my_books.txt", "")
         append("theme.txt", "")

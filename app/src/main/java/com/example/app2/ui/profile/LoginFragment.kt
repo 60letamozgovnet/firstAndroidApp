@@ -28,8 +28,8 @@ class LoginFragment : Fragment() {
         val btnSignIn: Button = view.findViewById(R.id.signIn)
         btnSignIn.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                GlobalDataBase().logIn(Auth(username.text.toString(), passLine.text.toString()))
-                GlobalDataBase().regI(Auth(username.text.toString(), passLine.text.toString()))
+                println( GlobalDataBase().logIn(Auth(username.text.toString(), passLine.text.toString())) )
+//                GlobalDataBase().regI(Auth(username.text.toString(), passLine.text.toString()))
             }
         }
         return view
