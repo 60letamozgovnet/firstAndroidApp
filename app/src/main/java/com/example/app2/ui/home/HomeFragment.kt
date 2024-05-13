@@ -42,6 +42,12 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
         val rcView: RecyclerView = view.findViewById(R.id.rcView)
         val textView: TextView = view.findViewById(R.id.textView)
         rcView.adapter = adapter
+        val notes = getDataFromFile("notes.txt").split("\n")
+        if (notes.size > 1){
+            println("u are this")
+            rcView.visibility = View.VISIBLE
+            textView.visibility = View.INVISIBLE
+        }
 
         val btnPlus = view.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.btnPlus)
         btnPlus.setOnClickListener{
@@ -66,14 +72,11 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
                 adapter.addNote(Note(
                     title, note, count
                 ))
-                appendNewLine("notes.txt", title + "\n" + note + "\n" + count)
+                appendNewLine("notes.txt", title + "\n" + note + "\n" + count + "\n")
                 myDialog.dismiss()
             }
-
         }
-
         return view
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,7 +86,6 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
         val textView: TextView = view.findViewById(R.id.textView)
         val notes = getDataFromFile("notes.txt").split("\n")
         if (notes.size > 1){
-            println("u are this")
             rcView.visibility = View.VISIBLE
             textView.visibility = View.INVISIBLE
             for (i in 0 until (notes.size - 3) step 3){
@@ -158,33 +160,20 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
     }
 
     fun deleteNote(title: String, note: String, count: Int){
-        val data: String = getDataFromFile("notes.txt")
+        val data = getDataFromFile("notes.txt").split("\n")
+        println(data)
+        println(data::class.simpleName)
 
-        var cnt: Int = 0
-        var cnt2: Int = 0
         var l: String = ""
-        for (i in data.split("\n")) {
-            if ((0 < cnt2) and (cnt2 <= 2)) {
-                if ((cnt % 3 == 2) and (i == note)){
-                    cnt2 ++
-                    continue
-                }
-                else cnt2 = 0
-                if ((cnt % 3 == 0) and (i.toInt() == count)){
-                    cnt2 ++
-                    continue
-                }
-                else cnt2 = 0
-            }
-
-            if ((cnt % 3 == 1) and (i == title)) {
-                cnt2 in 1..2
-                cnt += 3
+        for (i in 0 .. (data.size-2) step 3) {
+            if (
+                (data[i] == title) and
+                (data[i+1] == note) and
+                (data[i+2].toInt() == count)
+                ) {
                 continue
             }
-
-            l += (i + "\n")
-            cnt ++
+            else l += (data[i] + "\n" + data[i+1] + "\n" + data[i+2] + "\n")
         }
         rewriteFile("notes.txt", l)
         println(l)
@@ -195,14 +184,8 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
         // https://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined
         fileOutputStream = requireActivity().openFileOutput(file, Context.MODE_PRIVATE)
         fileOutputStream.write(data.toByteArray())
-        fileOutputStream.write("\n".toByteArray())
 
         println("Rewrite file")
         println(data)
     }
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
 }
