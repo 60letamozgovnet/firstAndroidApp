@@ -10,7 +10,10 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.example.app2.R
+import java.io.BufferedReader
+import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStreamReader
 
 class SettingsNavFragment : Fragment() {
 
@@ -19,50 +22,61 @@ class SettingsNavFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var theme: Int //0 - light 1 -dark
-        theme = 0
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_settings_nav, container, false)
-        val btn: ImageView = view.findViewById(R.id.switch_theme)
-        if (theme == 1) {
-            btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme))
-        }
-        else if (theme == 0) {
-            btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme2))
-        }
-        btn.setOnClickListener{
-            if (theme == 0) {
-                btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme))
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                theme = 1
-                rewriteFile("theme.txt", "1")
-            }
-            else if (theme == 1) {
-                btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme2))
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                theme = 0
-                rewriteFile("theme.txt", "0")
-            }
-        }
         return view
 
     }
 
-//    fun getDataFromFile(file: String): String {
-//        var fileInputStream: FileInputStream? = null
-//        fileInputStream = requireActivity().openFileInput(file)
-//        val inputStreamReader = InputStreamReader(fileInputStream)
-//        val bufferedReader = BufferedReader(inputStreamReader)
-//
-//        val stringBuilder: StringBuilder = StringBuilder()
-//        var text: String? = null
-//        while ({ text = bufferedReader.readLine(); text }() != null) {
-//            stringBuilder.append(text)
-//            stringBuilder.append("\n")
-//
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        var theme: Int
+//        println(getDataFromFile("settings.txt").split("\n"))
+//        if (getDataFromFile("settings.txt").split("\n").size > 1){
+//            theme = getDataFromFile("settings.txt").split("\n")[0].toInt()
 //        }
-//
-//        return stringBuilder.toString()
-//    }
+//        else{
+//            theme = 0
+//        }
+
+//        val btn: ImageView = view.findViewById(R.id.switch_theme)
+//        if (theme == 1) {
+//            btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme))
+//        }
+//        else if (theme == 0) {
+//            btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme2))
+//        }
+//        btn.setOnClickListener{
+//            theme = getDataFromFile("settings.txt").split("\n")[0].toInt()
+//            if (theme == 0) {
+//                btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme))
+////                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+////                rewriteFile("settings.txt", "1\n")
+//            }
+//            else if (theme == 1) {
+//                btn.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.switch_theme2))
+////                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+////                rewriteFile("settings.txt", "0\n")
+//            }
+//        }
+
+    }
+    fun getDataFromFile(file: String): String {
+        var fileInputStream: FileInputStream? = null
+        fileInputStream = requireActivity().openFileInput(file)
+        val inputStreamReader = InputStreamReader(fileInputStream)
+        val bufferedReader = BufferedReader(inputStreamReader)
+
+        val stringBuilder: StringBuilder = StringBuilder()
+        var text: String? = null
+        while ({ text = bufferedReader.readLine(); text }() != null) {
+            stringBuilder.append(text)
+            stringBuilder.append("\n")
+
+        }
+
+        return stringBuilder.toString()
+    }
 //
 //
 //    fun appendNewLine(file: String, data: String) {

@@ -1,6 +1,7 @@
 package com.example.app2.ui.profile
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.example.app2.R
 import com.example.app2.retrofit.BookDb
 import java.io.BufferedReader
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.InputStreamReader
 
 class NavFragment : Fragment(), BookAdapter.Listener {
@@ -31,7 +33,11 @@ class NavFragment : Fragment(), BookAdapter.Listener {
     ):  View? {
         val view = inflater.inflate(R.layout.fragment_prof_nav, container, false)
         val readable: RecyclerView = view.findViewById(R.id.readableBooks)
-        val readed: RecyclerView = view.findViewById(R.id.readedBooks)
+        val username: TextView = view.findViewById(R.id.nameUser)
+        val profFile = getDataFromFile("profile.txt").split("\n")
+        if (profFile.size > 1){
+            username.text = profFile[0]
+        }
         readable.adapter = adapter_readable
         val file: List<String> = getDataFromFile("my_books.txt").split("\n")
         var author: String = ""
@@ -66,14 +72,17 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         val authors: TextView = dialogBinding.findViewById(R.id.authorsDialog)
         authors.text = book.about
         val btnAdd: Button = dialogBinding.findViewById(R.id.btn_add_in_my_book)
+        btnAdd.text = "Удалить из читаемых"
 
         myDialog.setContentView(dialogBinding)
         myDialog.setCancelable(true)
-        myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.CYAN))
+        myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.LTGRAY))
         myDialog.show()
-//        btnAdd.setOnClickListener {
-//            appendNewLine("my_books.txt", title.text.toString() + authors.text.toString())
-//        }
+        btnAdd.setOnClickListener {
+            deleteBook(book.title, book.about, book.genre)
+            adapter_readable.deleteBook(book)
+            myDialog.dismiss()
+        }
     }
 
     fun getDataFromFile(file: String): String {
@@ -89,4 +98,35 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         }
         return stringBuilder.toString()
     }
+
+    fun deleteBook(title: String, about: String, genre: String){
+        val data = getDataFromFile("my_books.txt").split("\n")
+        println(data)
+        println(data::class.simpleName)
+
+        var l: String = ""
+        for (i in 0 .. (data.size-2) step 3) {
+            if (
+                (data[i] == title) and
+                (data[i+1] == about) and
+                (data[i+2] == genre)
+            ) {
+                continue
+            }
+            else l += (data[i] + "\n" + data[i+1] + "\n" + data[i+2] + "\n")
+        }
+        rewriteFile("my_books.txt", l)
+        println(l)
+    }
+
+    fun rewriteFile(file: String, data: String) {
+        val fileOutputStream: FileOutputStream
+        // https://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined
+        fileOutputStream = requireActivity().openFileOutput(file, Context.MODE_PRIVATE)
+        fileOutputStream.write(data.toByteArray())
+
+        println("Rewrite file")
+        println(data)
+    }
+
 }

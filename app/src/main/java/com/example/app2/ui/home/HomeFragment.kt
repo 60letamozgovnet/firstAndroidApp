@@ -14,6 +14,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app2.Note
@@ -36,18 +38,35 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+
+        appendNewLine("notes.txt", "")
+        appendNewLine("token_bearer.txt", "")
+        appendNewLine("my_books.txt", "")
+        appendNewLine("settings.txt", "")
+        appendNewLine("profile.txt", "")
+        println(getDataFromFile("notes.txt"))
+
 //        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+//        Не доделанно!!!!!!!
+//        var theme: Int
+//        println(getDataFromFile("settings.txt").split("\n"))
+//        if (getDataFromFile("settings.txt").split("\n").size > 1){
+//            theme = getDataFromFile("settings.txt").split("\n")[0].toInt()
+//        }
+//        else{
+//            theme = 0
+//        }
+//        if (theme == 0) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        }
+//        else if (theme == 1) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//        }
         val rcView: RecyclerView = view.findViewById(R.id.rcView)
         val textView: TextView = view.findViewById(R.id.textView)
         rcView.adapter = adapter
-        val notes = getDataFromFile("notes.txt").split("\n")
-        if (notes.size > 1){
-            println("u are this")
-            rcView.visibility = View.VISIBLE
-            textView.visibility = View.INVISIBLE
-        }
 
         val btnPlus = view.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.btnPlus)
         btnPlus.setOnClickListener{
@@ -81,10 +100,11 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val rcView: RecyclerView = view.findViewById(R.id.rcView)
         val textView: TextView = view.findViewById(R.id.textView)
+
         val notes = getDataFromFile("notes.txt").split("\n")
+
         if (notes.size > 1){
             rcView.visibility = View.VISIBLE
             textView.visibility = View.INVISIBLE

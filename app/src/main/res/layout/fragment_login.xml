@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="16"
+                android:backgroundTint="#fff"
                 android:hint="Логин (username)"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -52,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Пароль"
+                android:backgroundTint="#fff"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -60,7 +62,15 @@
             android:id="@+id/signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Вход / Регистрация" />
+            android:backgroundTint="#DF8181"
+            android:text="Вход" />
+
+        <Button
+            android:id="@+id/logIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C86B6B"
+            android:text="Регистрация" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

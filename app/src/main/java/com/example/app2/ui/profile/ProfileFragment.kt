@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,33 +13,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.app2.R
 import com.example.app2.databinding.FragmentProfileBinding
-import com.example.app2.retrofit.Auth
 import com.example.app2.retrofit.MainApi
 import com.google.android.material.navigation.NavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 class ProfileFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private var _binding: FragmentProfileBinding? = null
-    private lateinit var Api: MainApi
+//    private lateinit var Api: MainApi
     private val binding get() = _binding!!
-
-    private fun initRetro() {
-        val retrofit = Retrofit.Builder()
-            //.baseUrl("https://dummyjson.com/")
-            .baseUrl("https://bobonch.onrender.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        Api = retrofit.create(MainApi::class.java)
-    }
-
-    suspend fun logInto(auth: Auth): String = withContext(Dispatchers.IO) {
-        val response = Api.log(auth)
-        response
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +32,6 @@ class ProfileFragment: Fragment(), NavigationView.OnNavigationItemSelectedListen
     ): View {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        initRetro()
 
         drawerLayout = binding.fragmentProfile
         val navigationView = binding.navView
@@ -93,6 +77,20 @@ class ProfileFragment: Fragment(), NavigationView.OnNavigationItemSelectedListen
         }
         drawerLayout.closeDrawer(GravityCompat.END)
         return true
+    }
+
+    fun getDataFromFile(file: String): String {
+        var fileInputStream: FileInputStream? = null
+        fileInputStream = requireActivity().openFileInput(file)
+        val inputStreamReader = InputStreamReader(fileInputStream)
+        val bufferedReader = BufferedReader(inputStreamReader)
+        val stringBuilder: StringBuilder = StringBuilder()
+        var text: String? = null
+        while ({ text = bufferedReader.readLine(); text }() != null) {
+            stringBuilder.append(text)
+            stringBuilder.append("\n")
+        }
+        return stringBuilder.toString()
     }
 
     private fun replaceFragment(fragment: Fragment) {

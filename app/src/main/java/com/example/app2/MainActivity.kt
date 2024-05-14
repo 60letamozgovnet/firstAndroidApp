@@ -44,12 +44,6 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             )
         )
 
-        append("notes.txt", "")
-        append("token_bearer.txt", "")
-        append("my_books.txt", "")
-        append("theme.txt", "")
-        println(getDataFromFile("notes.txt").split("\n").size)
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

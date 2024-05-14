@@ -44,7 +44,7 @@
             android:layout_marginHorizontal="2dp"
             android:layout_marginVertical="1dp"
             android:backgroundTint="#C85555"
-            android:text="Add in readable"
+            android:text="Добавить в читаемые"
             app:cornerRadius="12dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
