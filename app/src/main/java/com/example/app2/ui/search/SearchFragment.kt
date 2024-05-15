@@ -20,6 +20,7 @@ import com.example.app2.GlobalDataBase
 import com.example.app2.R
 import com.example.app2.databinding.FragmentSearchBinding
 import com.example.app2.retrofit.BookDb
+import com.example.app2.retrofit.TknBookDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

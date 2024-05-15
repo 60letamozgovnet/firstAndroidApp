@@ -64,11 +64,11 @@
             <ImageButton
                 android:id="@+id/removeBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
                 android:backgroundTint="#DF8181"
                 android:contentDescription="Удалить заметку"
-                app:srcCompat="@drawable/cross_svgrepo_com" />
+                app:srcCompat="@drawable/trash_bin" />
 
         </LinearLayout>
 
