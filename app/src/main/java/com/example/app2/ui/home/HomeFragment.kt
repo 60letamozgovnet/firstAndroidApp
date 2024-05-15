@@ -22,6 +22,8 @@ import com.example.app2.Note
 import com.example.app2.NoteAdapter
 import com.example.app2.R
 import com.example.app2.databinding.FragmentHomeBinding
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -38,6 +40,10 @@ class HomeFragment : Fragment(), NoteAdapter.Listener {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        val database = Firebase.database
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
 
         appendNewLine("notes.txt", "")
         appendNewLine("token_bearer.txt", "")

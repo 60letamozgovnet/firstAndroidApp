@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils.split
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +20,18 @@ import com.example.app2.BookAdapter
 import com.example.app2.GlobalDataBase
 import com.example.app2.R
 import com.example.app2.retrofit.BookDb
+import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class NavFragment : Fragment(), BookAdapter.Listener {
     private val adapter_readable = BookAdapter(this)
@@ -31,13 +40,14 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ):  View? {
-        val view = inflater.inflate(R.layout.fragment_prof_nav, container, false)
-        val readable: RecyclerView = view.findViewById(R.id.readableBooks)
-        val username: TextView = view.findViewById(R.id.nameUser)
+        val view1 = inflater.inflate(R.layout.fragment_prof_nav, container, false)
+        val readable: RecyclerView = view1.findViewById(R.id.readableBooks)
+        val username: TextView = view1.findViewById(R.id.nameUser)
         val profFile = getDataFromFile("profile.txt").split("\n")
         if (profFile.size > 1){
             username.text = profFile[0]
         }
+
         readable.adapter = adapter_readable
         val file: List<String> = getDataFromFile("my_books.txt").split("\n")
         var author: String = ""
@@ -58,13 +68,16 @@ class NavFragment : Fragment(), BookAdapter.Listener {
             }
         }
         if (adapter_readable.getSize() > 0){
-            view.findViewById<TextView>(R.id.empty_rcView).visibility = View.INVISIBLE
+            view1.findViewById<TextView>(R.id.empty_rcView).visibility = View.INVISIBLE
         }
 
-        return view
+        return view1
     }
 
     override fun OnClickView(book: Book) {
+        val database = Firebase.database
+        val ref = database.getReference("message")
+
         val dialogBinding = layoutInflater.inflate(R.layout.dialog_book, null)
         val myDialog = Dialog(requireContext())
         val title: TextView = dialogBinding.findViewById(R.id.BkTitle)
@@ -77,11 +90,18 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         myDialog.setContentView(dialogBinding)
         myDialog.setCancelable(true)
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.LTGRAY))
+        val tv: TextView = dialogBinding.findViewById<TextView>(R.id.textId)
+
         myDialog.show()
         btnAdd.setOnClickListener {
             deleteBook(book.title, book.about, book.genre)
             adapter_readable.deleteBook(book)
             myDialog.dismiss()
+        }
+
+        dialogBinding.findViewById<Button>(R.id.btnSend).setOnClickListener {
+            onChangeListener(ref, tv)
+            sendMsg(ref, "Kirill", "Hello everyone")
         }
     }
 
@@ -129,4 +149,37 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         println(data)
     }
 
+    fun sendMsg(ref: DatabaseReference, username: String, msg: String) {
+        ref.get().addOnSuccessListener {
+            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+            val currentDate = "(" + sdf.format(Date()) + ")"
+
+            var tmp: String
+            tmp = it.value.toString() + currentDate + " " + username + ": " + msg + "\n"
+
+            ref.setValue(tmp)
+            // println(it.value.toString())
+
+
+            // Log.i("firebase", "Got value ${it.value}")
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+        println("end of foo")
+    }
+
+    fun onChangeListener(dRef: DatabaseReference, tv: TextView) {
+        dRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //tv.append("\n")
+                tv.text = snapshot.value.toString()
+                // tv.append(snapshot.value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 }

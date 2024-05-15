@@ -46,5 +46,26 @@
             android:backgroundTint="#C85555"
             android:text="Добавить в читаемые"
             app:cornerRadius="12dp" />
+
+        <TextView
+            android:id="@+id/textId"
+            android:layout_width="match_parent"
+            android:layout_height="370dp"
+            android:text="TextView"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/sendedText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Сообщение"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Отправить" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

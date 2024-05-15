@@ -5,13 +5,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app2.Book
@@ -20,7 +20,12 @@ import com.example.app2.GlobalDataBase
 import com.example.app2.R
 import com.example.app2.databinding.FragmentSearchBinding
 import com.example.app2.retrofit.BookDb
-import com.example.app2.retrofit.TknBookDb
+import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,6 +33,8 @@ import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 class SearchFragment : Fragment(), BookAdapter.Listener {
@@ -36,7 +43,6 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -65,14 +71,18 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
             myDialog.setCancelable(true)
             myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.CYAN))
             myDialog.show()
+
             dialogBinding.findViewById<Button>(R.id.saveForBk).setOnClickListener {
                 val title: String = dialogBinding.findViewById<EditText>(R.id.titleForBk).text.toString()
                 val authors: String = dialogBinding.findViewById<EditText>(R.id.authorForBk).text.toString()
                 val genre: String = dialogBinding.findViewById<EditText>(R.id.genreForBk).text.toString()
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    GlobalDataBase().addBook(BookDb(title, authors, genre))
-                    myDialog.dismiss()
+                if (title.isNotEmpty()){
+                    CoroutineScope(Dispatchers.IO).launch {
+
+                        GlobalDataBase().addBook(BookDb(title, authors, genre))
+                        myDialog.dismiss()
+                    }
                 }
             }
         }
@@ -81,6 +91,9 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
     }
 
     override fun OnClickView(book: Book) {
+        val database = Firebase.database
+        val ref = database.getReference(book.title)
+
         val dialogBinding = layoutInflater.inflate(R.layout.dialog_book, null)
         val myDialog = Dialog(requireContext())
         val title: TextView = dialogBinding.findViewById(R.id.BkTitle)
@@ -92,11 +105,18 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         myDialog.setContentView(dialogBinding)
         myDialog.setCancelable(true)
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.CYAN))
+
         myDialog.show()
         btnAdd.setOnClickListener {
             appendNewLine("my_books.txt", title.text.toString() + "\n" + authors.text.toString() + "\n" + "Генри :)")
-            println(getDataFromFile("my_books.txt"))
             myDialog.dismiss()
+        }
+
+        val tv: TextView = dialogBinding.findViewById<TextView>(R.id.textId)
+
+        dialogBinding.findViewById<Button>(R.id.btnSend).setOnClickListener {
+            onChangeListener(ref, tv)
+            sendMsg(ref, "Kirill", "Hello everyone")
         }
 
     }
@@ -161,5 +181,39 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         }
         rewriteFile("my_books.txt", l)
         println(l)
+    }
+
+    fun sendMsg(ref: DatabaseReference, username: String, msg: String) {
+        ref.get().addOnSuccessListener {
+            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+            val currentDate = "(" + sdf.format(Date()) + ")"
+
+            var tmp: String
+            tmp = it.value.toString() + currentDate + " " + username + ": " + msg + "\n"
+
+            ref.setValue(tmp)
+            // println(it.value.toString())
+
+
+            // Log.i("firebase", "Got value ${it.value}")
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+        println("end of foo")
+    }
+
+    fun onChangeListener(dRef: DatabaseReference, tv: TextView) {
+        dRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //tv.append("\n")
+                tv.text = snapshot.value.toString()
+                // tv.append(snapshot.value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }

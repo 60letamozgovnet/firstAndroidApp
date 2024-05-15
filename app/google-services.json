@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1093887220990",
+    "firebase_url": "https://bonch-6476e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bonch-6476e",
+    "storage_bucket": "bonch-6476e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093887220990:android:52291a39134ede1994d9af",
+        "android_client_info": {
+          "package_name": "com.example.app2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBto3qKRk7VIiyNc-f-CmZK5W0PIGj3cIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

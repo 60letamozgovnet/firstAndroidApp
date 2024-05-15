@@ -1,6 +1,9 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    // alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+
+    id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -40,7 +43,11 @@ android {
 }
 
 dependencies {
-//    val version: String = "42.6.0"
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.database.ktx)
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation(libs.firebase.database)
+    //    val version: String = "42.6.0"
 //    implementation("org.postgresql:postgresql:$version")
     //implementation(kotlin("stdlib-jdk8"))
     //implementation("com.zaxxer:HikariCP:4.0.3")
