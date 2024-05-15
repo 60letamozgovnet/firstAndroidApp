@@ -1,0 +1,47 @@
+// initializing db
+//Перед тем как использовать данную базу данных надо подключить firebase к котлину. Для этого надо подключить наше приложение к серверу
+//и скачать все зависимости.
+val database = Firebase.database
+val ref = database.getReference("message")
+
+// inside buttonListener
+onChangeListener(ref)
+sendMsg(ref, "Kirill", "Hello evryone")
+
+// realization of functions
+
+// передаем (ref, имя пользователя, сообщение)
+ private fun sendMsg(ref: DatabaseReference, username: String, msg: String) {
+        ref.get().addOnSuccessListener {
+            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+            val currentDate = "(" + sdf.format(Date()) + ")"
+
+            var tmp: String
+            tmp = it.value.toString() + currentDate + " " + username + ": " + msg + "\n"
+
+            ref.setValue(tmp)
+            // println(it.value.toString())
+
+
+            // Log.i("firebase", "Got value ${it.value}")
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+        println("end of foo")
+    }
+// передаем только ref
+    private fun onChangeListener(dRef: DatabaseReference) {
+        dRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val tv = findViewById<TextView>(R.id.textId)
+                //tv.append("\n")
+                tv.text = snapshot.value.toString()
+                // tv.append(snapshot.value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
