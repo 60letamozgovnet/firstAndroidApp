@@ -43,8 +43,7 @@ class GlobalDataBase {
         response
     }
 
-    suspend fun addBook(book: BookDb): Int = withContext(Dispatchers.IO) {
-        val token: String = getDataFromFile("token_bearer.txt")
+    suspend fun addBook(book: BookDb, token: String): Int = withContext(Dispatchers.IO) {
         val response = Api.insBook(TknBookDb(
             Token(token),
             book

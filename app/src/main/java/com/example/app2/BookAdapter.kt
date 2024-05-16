@@ -44,11 +44,17 @@ class BookAdapter(val listener: Listener) : RecyclerView.Adapter<BookAdapter.Vie
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun deleteBook(book: Book){
         itemList.remove(book)
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun clear(){
+        itemList.clear()
+        notifyDataSetChanged()
+    }
     interface Listener{
         fun OnClickView(book: Book)
     }

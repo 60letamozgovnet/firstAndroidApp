@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
@@ -92,6 +93,12 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.LTGRAY))
         val tv: TextView = dialogBinding.findViewById<TextView>(R.id.textId)
 
+        var username: String = getDataFromFile("profile.txt").split("\n")[0]
+        val mesEdTV = dialogBinding.findViewById<EditText>(R.id.sendedText)
+        if (username.isEmpty()){
+            username = "Unregister user"
+        }
+
         myDialog.show()
         btnAdd.setOnClickListener {
             deleteBook(book.title, book.about, book.genre)
@@ -100,8 +107,9 @@ class NavFragment : Fragment(), BookAdapter.Listener {
         }
 
         dialogBinding.findViewById<Button>(R.id.btnSend).setOnClickListener {
+            val mes = mesEdTV.text.toString()
             onChangeListener(ref, tv)
-            sendMsg(ref, "Kirill", "Hello everyone")
+            sendMsg(ref, username, mes)
         }
     }
 

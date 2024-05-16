@@ -51,7 +51,7 @@
             android:id="@+id/textId"
             android:layout_width="match_parent"
             android:layout_height="370dp"
-            android:text="TextView"
+            android:text="Чат"
             android:textSize="14sp" />
 
         <EditText

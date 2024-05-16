@@ -39,21 +39,21 @@ class LoginFragment : Fragment() {
         var token: String = getDataFromFile("token_bearer.txt")
         btnSignIn.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
+                println(passLine.text.toString() + " " + username.text.toString())
                 token = GlobalDataBase().logIn(Auth(username.text.toString(), passLine.text.toString()))
+                println(token)
+                rewriteFile("profile.txt", username.text.toString())
+                rewriteFile("token_bearer.txt", token)
+
             }
-            rewriteFile("profile.txt", username.text.toString())
-            rewriteFile("token_bearer.txt", token)
         }
         btnLogIn.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 if (GlobalDataBase().regI(Auth(username.text.toString(), passLine.text.toString())) == 0){
                     token = GlobalDataBase().logIn(Auth(username.text.toString(), passLine.text.toString()))
+                    rewriteFile("token_bearer.txt", token)
+                    rewriteFile("profile.txt", username.text.toString())
                 }
-                else{
-                    token = "NAN"
-                }
-                rewriteFile("token_bearer.txt", token)
-                rewriteFile("profile.txt", username.text.toString())
             }
         }
 

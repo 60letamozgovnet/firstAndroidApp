@@ -54,6 +54,7 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         rcView.adapter = adapter
         val btnSearch: Button = binding.btnSearch
         btnSearch.setOnClickListener{
+            adapter.clear()
             CoroutineScope(Dispatchers.IO).launch {
                 var list: List<BookDb> = GlobalDataBase().getBooks()
                 for (i in list) {
@@ -77,12 +78,15 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
                 val authors: String = dialogBinding.findViewById<EditText>(R.id.authorForBk).text.toString()
                 val genre: String = dialogBinding.findViewById<EditText>(R.id.genreForBk).text.toString()
 
-                if (title.isNotEmpty()){
-                    CoroutineScope(Dispatchers.IO).launch {
 
-                        GlobalDataBase().addBook(BookDb(title, authors, genre))
-                        myDialog.dismiss()
+                if (title.isNotEmpty()){
+                    val token: String = getDataFromFile("token_bearer.txt").replace("\\s".toRegex(), "")
+                    println(token)
+                    println("$title $authors $genre")
+                    CoroutineScope(Dispatchers.IO).launch {
+                        println(GlobalDataBase().addBook(BookDb(title, authors, genre), token))
                     }
+                    myDialog.dismiss()
                 }
             }
         }
@@ -106,6 +110,12 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         myDialog.setCancelable(true)
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.CYAN))
 
+        var username: String = getDataFromFile("profile.txt").split("\n")[0]
+        val mesEdTV = dialogBinding.findViewById<EditText>(R.id.sendedText)
+        if (username.isEmpty()){
+            username = "Unregister user"
+        }
+
         myDialog.show()
         btnAdd.setOnClickListener {
             appendNewLine("my_books.txt", title.text.toString() + "\n" + authors.text.toString() + "\n" + "Генри :)")
@@ -115,10 +125,10 @@ class SearchFragment : Fragment(), BookAdapter.Listener {
         val tv: TextView = dialogBinding.findViewById<TextView>(R.id.textId)
 
         dialogBinding.findViewById<Button>(R.id.btnSend).setOnClickListener {
+            val mes = mesEdTV.text.toString()
             onChangeListener(ref, tv)
-            sendMsg(ref, "Kirill", "Hello everyone")
+            sendMsg(ref, username, mes)
         }
-
     }
 
     fun appendNewLine(file: String, data: String) {
